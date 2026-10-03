@@ -84,3 +84,9 @@
 - PASS: أضيف RPC آمن `kiosk_exit_pin_status` يعيد حالة وجود PIN فقط دون كشف الـ hash.
 - PASS: مسار بدون PIN = تأكيد داخلي ثم Sign Out إلى شاشة الدخول.
 - PASS: مسار مع PIN = نموذج داخلي ثم `verify_exit_pin`.
+
+## v0.6.2 — Return-date rendering regression
+
+- Supabase verification: PASS — returned loans contain non-null `returned_at`.
+- Front-end template fix: PASS — returned date now executes `formatISODate(...)` instead of displaying the JavaScript expression literally.
+- JavaScript syntax check: PASS.
