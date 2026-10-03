@@ -1,31 +1,7 @@
 {
-  "name": "Manara Smart Library",
-  "version": "0.4.0",
-  "stage": "Library Pro - Phase 2 Local/LAN",
-  "features": [
-    "branding",
-    "local-persistence",
-    "lan-multi-station-server",
-    "atomic-loan-return-transactions",
-    "excel-xlsx-csv-import",
-    "student-cards-code39",
-    "book-labels-code39",
-    "self-checkout",
-    "fast-returns",
-    "automatic-overdue",
-    "renewals",
-    "reservations",
-    "student-full-record",
-    "book-full-record",
-    "users-and-roles",
-    "admin-dashboard",
-    "librarian-dashboard",
-    "advanced-reports",
-    "csv-exports",
-    "stations-management",
-    "rfid-ready-identifiers",
-    "activity-audit-log",
-    "backup-restore",
-    "session-timeout"
-  ]
+  "name": "Bilal Smart Library",
+  "version": "0.5.0-cloud",
+  "project_ref": "xruvbsbmvpntczaydhpo",
+  "school": "مدرسة بلال بن رباح النموذجية للبنين",
+  "backend": "Supabase Cloud"
 }
