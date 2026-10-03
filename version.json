@@ -1,5 +1,5 @@
 {
-  "name": "Bilal Smart Library",
-  "version": "0.5.1-cloud",
-  "channel": "cloud-pro"
+  "version": "0.5.2",
+  "name": "Bilal Smart Library Cloud Pro",
+  "release": "admin-bootstrap-bypassed"
 }
