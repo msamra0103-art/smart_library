@@ -77,3 +77,10 @@
 3. جرّب 5 بطاقات طلاب و5 ملصقات كتب.
 4. جرّب جهازين في الوقت نفسه.
 5. اختبر حساب Kiosk ومحطة الإرجاع وحساب المدير.
+
+## v0.6.1 Kiosk Exit UX
+- PASS: لا توجد استدعاءات `prompt()` لخروج المحطة.
+- PASS: فحص JavaScript عبر `node --check`.
+- PASS: أضيف RPC آمن `kiosk_exit_pin_status` يعيد حالة وجود PIN فقط دون كشف الـ hash.
+- PASS: مسار بدون PIN = تأكيد داخلي ثم Sign Out إلى شاشة الدخول.
+- PASS: مسار مع PIN = نموذج داخلي ثم `verify_exit_pin`.

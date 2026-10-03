@@ -1,1 +1,5 @@
-{"version":"0.6.0","name":"Bilal Smart Library Production","channel":"cloud","date":"2026-10-03"}
+{
+  "version": "0.6.1",
+  "name": "Bilal Smart Library",
+  "channel": "production"
+}

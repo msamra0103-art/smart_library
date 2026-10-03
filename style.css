@@ -60,3 +60,8 @@ body.kiosk-mode .return-layout{min-height:100vh;padding:clamp(28px,4vw,70px);ali
 @media(max-width:900px){body.kiosk-mode .kiosk-shell{grid-template-columns:1fr;overflow:auto}body.kiosk-mode{overflow:auto}.password-row{grid-template-columns:1fr auto}.password-row #genPassBtn{grid-column:1/-1}}
 .kiosk-mode-switch{position:fixed;z-index:9999;left:18px;top:64px;border:1px solid rgba(255,255,255,.25);background:linear-gradient(135deg,rgba(18,163,166,.92),rgba(40,103,232,.92));backdrop-filter:blur(10px);color:#fff;border-radius:12px;padding:10px 14px;font:800 12px Tahoma,Arial;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.18)}
 .kiosk-mode-switch:hover{transform:translateY(-1px)}
+
+/* v0.6.1 — Kiosk exit UX */
+.field-error{min-height:22px;color:#b42318;font-size:13px;margin-top:-4px;margin-bottom:8px}
+.kiosk-mode .modal-backdrop{z-index:99999}
+.kiosk-mode .modal-card{max-width:520px}
