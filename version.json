@@ -1,5 +1,4 @@
 {
-  "version": "0.6.6",
-  "name": "Bilal Smart Library",
-  "channel": "production"
+  "version": "0.6.7",
+  "release": "external-kiosk-prelogin-barcode"
 }
