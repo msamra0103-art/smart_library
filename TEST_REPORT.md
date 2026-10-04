@@ -118,13 +118,13 @@
 - PASS: simulated successful checkout reset the student session immediately and returned `state.kiosk.student` to null.
 
 
-## v0.6.7 — Keep-Alive Schedule
+## v0.6.8 — Keep-Alive Schedule
 - `vercel.json` valid JSON.
 - Cron schedule: `0 3,15 * * *`.
 - Expected Qatar times: ~06:00 and ~18:00 daily.
 
 
-## v0.6.7 — External Kiosk Pre‑Login
+## v0.6.8 — External Kiosk Pre‑Login
 
 - PASS: JavaScript syntax check (`node --check`).
 - PASS: قاعدة البيانات تحتوي أعمدة Token/Activation للمحطات.
@@ -133,3 +133,10 @@
 - PASS: `checkout_book_v2` و`return_book_v2` يقبلان `p_actor_user_id = null` لتسجيل عملية محطة عامة بدون حساب إداري.
 - PASS: واجهة Kiosk الخارجية تستخدم نفس ماسك HID المحسن لـ Enter/Tab وتغلق جلسة الطالب فور نجاح الاستعارة.
 - ملاحظة: تعذر تنفيذ اختبار HTTP مباشر من بيئة البناء بسبب منع DNS الخارجي في الحاوية؛ تم تنظيف محطة الاختبار المؤقتة بالكامل بعد المحاولة.
+
+
+## v0.6.8 scanner regression
+- تمت مراجعة مسار محطة الاستعارة الخارجية بحيث لا يعتمد على Enter.
+- إدخال القارئ السريع يُجمع في buffer ويُرسل تلقائيًا بعد 90ms من توقف الإدخال.
+- حقل المسح أصبح readonly لمنع وميض رقم الطالب على الشاشة.
+- ما زال Enter/Tab مدعومًا كخيار توافق، لكنه غير مطلوب.

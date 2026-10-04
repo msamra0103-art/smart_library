@@ -79,5 +79,5 @@ body.kiosk-mode .return-layout{min-height:100vh;padding:clamp(28px,4vw,70px);ali
 @media(max-width:900px){.circulation-filter-grid{grid-template-columns:1fr 1fr}.date-shortcuts{grid-column:1/-1}.circulation-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.circulation-filter-grid,.circulation-kpis{grid-template-columns:1fr}}
 
-/* v0.6.7 external kiosk activation */
+/* v0.6.8 external kiosk activation */
 .activation-code-box{display:grid;gap:8px;text-align:center;padding:18px;border:1px solid rgba(19,126,141,.18);border-radius:18px;background:linear-gradient(135deg,rgba(13,94,112,.06),rgba(34,151,154,.08));margin-bottom:14px}.activation-code-box span,.activation-code-box small{color:#667b84}.activation-code-box b{font-size:15px}.activation-code-box code{display:block;font:900 34px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:8px;direction:ltr;color:#0b6f7a;background:#fff;border-radius:14px;padding:13px 18px;border:1px dashed rgba(11,111,122,.3);user-select:all}.station-meta .status{margin-inline-start:6px}
