@@ -1,6 +1,6 @@
 const STORAGE_KEY='bilalSmartLibraryCloudV06';
 const LEGACY_KEYS=[];
-const VERSION='0.6.4';
+const VERSION='0.6.6';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const deepClone=x=>JSON.parse(JSON.stringify(x));
 const esc=v=>String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));
@@ -114,7 +114,7 @@ function topBooks(n=10){const map={};state.loans.forEach(l=>{map[l.bookCode]=(ma
 function topStudents(n=10){const map={};state.loans.forEach(l=>{map[l.studentCode]=(map[l.studentCode]||0)+1});return Object.entries(map).map(([code,count])=>({code,count,name:state.students.find(s=>s.code===code)?.name||state.loans.find(l=>l.studentCode===code)?.student||code})).sort((a,b)=>b.count-a.count).slice(0,n)}
 
 function kiosk(){const st=currentStation(),k=state.kiosk,mode=st.readerMode||state.config.readerMode;return `<div class="kiosk-shell"><div class="kiosk-instructions"><div class="kiosk-brand"><div class="brand-mark small logo-slot">${logoMarkup()}</div><div><h3>${esc(state.config.siteName)}</h3><span>${esc(state.config.schoolName)}</span></div></div><span class="scanner-ready">● ${esc(st.name)} — ${mode==='rfid'?'RFID':mode==='hybrid'?'Barcode + RFID':'Barcode'}</span>${!currentUser?'<button class="kiosk-exit" id="exitGuestKiosk">خروج المحطة</button>':''}<h1>${k.student?'امسح الكتاب الآن':'ابدأ ببطاقة الطالب'}</h1><p>${k.student?'يمكن مسح باركود الكتاب أو بطاقة RFID المرتبطة به.':'امسح باركود بطاقة الطالب أو RFID. سيعرض النظام حساب الطالب ويبدأ جلسة خاصة به.'}</p><div class="scan-orb">▥</div><div class="kiosk-hint">القارئ يعمل كلوحة مفاتيح ويرسل Enter بعد المسح.</div></div><div class="kiosk-panel kiosk-stage">${k.student?studentKioskCard(k):`<div class="scan-empty"><h2>جاهز للمسح</h2><p>الطالب يمرر البطاقة أمام القارئ</p></div>`}<input id="kioskScan" class="scan-input" autocomplete="off" placeholder="امسح الكود هنا أو اكتب للتجربة ثم Enter"/><div class="scan-feedback" id="scanFeedback"></div></div></div>`}
-function studentKioskCard(k){const active=state.loans.filter(l=>l.studentCode===k.student.code&&['مستعار','متأخر'].includes(l.status));const activeCount=k.student.activeLoans??active.length;const late=k.student.overdue??active.filter(l=>l.status==='متأخر').length;return `<div class="student-card"><div class="student-head"><div class="student-photo">${esc(k.student.name[0])}</div><div><h3>مرحبًا، ${esc(k.student.name)}</h3><p>${esc(k.student.grade)} / ${esc(k.student.section)} • الكتب الحالية ${activeCount}/${state.config.maxBooks}${late?` • <b class="danger-text">${late} متأخر</b>`:''}</p></div><div class="student-code">${esc(k.student.code)}</div></div>${k.lastBook?`<div class="loan-book"><div class="book-cover"></div><div><h4>${esc(k.lastBook.title)}</h4><p>${esc(k.lastBook.code)} • ${esc(k.lastBook.category)} • الرف ${esc(k.lastBook.shelf)}</p></div></div><div class="success-box">✓ تمت الاستعارة — الإرجاع المتوقع ${formatISODate(k.lastLoanDueISO)}</div>`:`<div class="info-banner" style="margin-top:14px">تم التعرف على الطالب. امسح الكتاب.</div>`}<div class="session-strip"><span>إغلاق الجلسة تلقائيًا</span><b id="sessionCountdown">${state.config.autoClose?state.config.sessionSeconds+' ث':'يدوي'}</b></div><div class="kiosk-actions"><button class="btn primary" id="finishSession">إنهاء الجلسة</button></div></div>`}
+function studentKioskCard(k){const active=state.loans.filter(l=>l.studentCode===k.student.code&&['مستعار','متأخر'].includes(l.status));const activeCount=k.student.activeLoans??active.length;const late=k.student.overdue??active.filter(l=>l.status==='متأخر').length;return `<div class="student-card"><div class="student-head"><div class="student-photo">${esc(k.student.name[0])}</div><div><h3>مرحبًا، ${esc(k.student.name)}</h3><p>${esc(k.student.grade)} / ${esc(k.student.section)} • الكتب الحالية ${activeCount}/${state.config.maxBooks}${late?` • <b class="danger-text">${late} متأخر</b>`:''}</p></div><div class="student-code">${esc(k.student.code)}</div></div>${k.lastBook?`<div class="loan-book"><div class="book-cover"></div><div><h4>${esc(k.lastBook.title)}</h4><p>${esc(k.lastBook.code)} • ${esc(k.lastBook.category)} • الرف ${esc(k.lastBook.shelf)}</p></div></div><div class="success-box">✓ تمت الاستعارة — الإرجاع المتوقع ${formatISODate(k.lastLoanDueISO)}</div>`:`<div class="info-banner" style="margin-top:14px">تم التعرف على الطالب. امسح الكتاب.</div>`}<div class="session-strip"><span>مهلة مسح الكتاب</span><b id="sessionCountdown">${state.config.autoClose?state.config.sessionSeconds+' ث':'يدوي'}</b></div><div class="kiosk-actions"><button class="btn primary" id="finishSession">إنهاء الجلسة</button></div></div>`}
 
 function students(){return `<div class="section-title"><div><h2>الطلاب</h2><p>سجل كامل لكل طالب، بطاقات باركود، RFID واستيراد جماعي.</p></div><div class="toolbar-wrap"><label class="btn secondary file-btn">استيراد Excel/CSV<input id="studentImportFile" type="file" accept=".xlsx,.csv,.txt" hidden></label><button class="btn ghost" id="studentTemplateBtn">قالب Excel/CSV</button><button class="btn secondary" id="printAllStudents">طباعة البطاقات</button><button class="btn primary" id="addStudentBtn">+ طالب</button></div></div><div class="info-banner"><b>الاستيراد المرن:</b> يقبل أعمدة مثل: اسم الطالب، الرقم الشخصي، الصف، الشعبة، كود الطالب، RFID. ويمكن للنظام توليد الأكواد الناقصة تلقائيًا.</div><div class="card"><div class="card-head"><div class="table-tools"><input class="search" id="studentSearch" placeholder="الاسم / الكود / الصف / الشعبة"><select class="select" id="studentStatusFilter"><option value="">كل الحالات</option><option>نشط</option><option>موقوف</option></select></div><span>${state.students.length} طالب</span></div><div id="studentTableWrap">${studentTable(state.students)}</div></div>`}
 function studentTable(data){return `<div class="table-scroll"><table class="data-table"><thead><tr><th>الكود</th><th>الطالب</th><th>الرقم الشخصي</th><th>الصف / الشعبة</th><th>الكتب</th><th>RFID</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>${data.map(s=>`<tr><td><b>${esc(s.code)}</b></td><td><button class="link-btn" onclick="openStudentRecord('${esc(s.code)}')">${esc(s.name)}</button></td><td>${maskPid(s.personalId)}</td><td>${esc(s.grade)} / ${esc(s.section)}</td><td>${s.loans||0}</td><td>${s.rfidTag?'<span class="status available">مرتبط</span>':'—'}</td><td><span class="status ${statusClass(s.status)}">${esc(s.status)}</span></td><td><div class="row-actions"><button class="btn ghost btn-sm" onclick="openStudentRecord('${esc(s.code)}')">السجل</button><button class="btn ghost btn-sm" onclick="printStudentCard('${esc(s.code)}')">بطاقة</button><button class="btn secondary btn-sm" onclick="openStudentModal('${esc(s.code)}')">تعديل</button><button class="btn ghost btn-sm" onclick="toggleStudentStatus('${esc(s.code)}')">${s.status==='نشط'?'إيقاف':'تفعيل'}</button></div></td></tr>`).join('')}</tbody></table></div>`}
@@ -234,7 +234,7 @@ async function handleScan(code){
  if(remoteMode){const br=await cloudTransaction('book_lookup',{bookCode});if(!br?.ok){scanMsg(br?.message||'لم يتم العثور على الكتاب',false);return}const result=await borrowBook(state.kiosk.student.code,br.book.copyCode);if(result.ok){state.kiosk.lastBook={code:br.book.copyCode,title:br.book.title||'كتاب',category:br.book.category||'',shelf:''};state.kiosk.lastLoanDueISO=result.dueDateISO;render('kiosk');await loadCloudState(false,true)}else scanMsg(result.message,false);return}
  const b=resolveBook(bookCode);if(!b){scanMsg('لم يتم العثور على الكتاب',false);return}const result=await borrowBook(state.kiosk.student.code,b.code);if(result.ok){state.kiosk.lastBook=resolveBook(b.code);state.kiosk.lastLoanDueISO=result.dueDateISO;render('kiosk')}else scanMsg(result.message,false)
 }
-async function borrowBook(studentCode,bookCode){if(remoteMode){const res=await cloudTransaction('checkout',{studentCode,bookCode,stationCode:currentStation().id,method:currentUser?.role==='kiosk'?'self':'staff'});if(res?.ok){await loadCloudState(false,true);return {ok:true,dueDateISO:res.due_at}}return {ok:false,message:res?.message||'تعذر تنفيذ الاستعارة'}}
+async function borrowBook(studentCode,bookCode){if(remoteMode){const res=await cloudTransaction('checkout',{studentCode,bookCode,stationCode:currentStation().id,method:currentUser?.role==='kiosk'?'self':'staff'});if(res?.ok){if(currentUser?.role!=='kiosk')await loadCloudState(false,true);return {ok:true,dueDateISO:res.due_at}}return {ok:false,message:res?.message||'تعذر تنفيذ الاستعارة'}}
  refreshDerivedState();const s=state.students.find(x=>x.code===studentCode),b=state.books.find(x=>x.code===bookCode);if(!s||!b)return {ok:false,message:'بيانات الطالب أو الكتاب غير موجودة'};if(s.status!=='نشط')return {ok:false,message:'حساب الطالب موقوف'};if(b.status!=='متاح')return {ok:false,message:'الكتاب غير متاح حاليًا'};const act=state.loans.filter(l=>l.studentCode===s.code&&['مستعار','متأخر'].includes(l.status));if(act.length>=state.config.maxBooks)return {ok:false,message:`بلغ الطالب الحد الأقصى (${state.config.maxBooks})`};if(state.config.preventOverdue&&act.some(l=>l.status==='متأخر'))return {ok:false,message:'لدى الطالب كتاب متأخر؛ لا يمكن الاستعارة'};const queue=activeReservations().filter(r=>r.bookCode===b.code).sort((a,z)=>(a.createdISO||'').localeCompare(z.createdISO||''));if(queue.length&&queue[0].studentCode!==s.code)return {ok:false,message:`الكتاب محجوز لطالب آخر في قائمة الانتظار`};const due=addDaysISO(state.config.loanDays);const loan={id:`LN${Date.now()}`,studentCode:s.code,student:s.name,bookCode:b.code,book:b.title,loanDateISO:todayISO(),dueDateISO:due,returnedDateISO:null,status:'مستعار',renewalsUsed:0,stationId:currentStation().id,createdISO:nowISO()};state.loans.push(loan);b.status='مستعار';if(queue.length&&queue[0].studentCode===s.code){queue[0].status='مكتمل';queue[0].fulfilledISO=nowISO()}logActivity('استعارة',`${s.name} ← ${b.title}`,{studentCode:s.code,bookCode:b.code,stationId:currentStation().id});saveState();return {ok:true,dueDateISO:due}}
 
 async function returnBook(identifier,show=true){if(remoteMode){const res=await cloudTransaction('return',{bookCode:String(identifier).trim(),stationCode:currentStation().id});if(res?.ok){await loadCloudState(false,true);if(show){toast('تم تسجيل الإرجاع بنجاح');render(currentView)}return {ok:true}}if(show)toast(res?.message||'تعذر الإرجاع');return {ok:false}}const b=resolveBook(identifier);if(!b){if(show)scanMsg('الكتاب غير معروف',false);return {ok:false}}const loan=state.loans.find(l=>l.bookCode===b.code&&['مستعار','متأخر'].includes(l.status));if(!loan){if(show)scanMsg('لا توجد استعارة نشطة لهذا الكتاب',false);return {ok:false}}return returnLoanById(loan.id,show)}
@@ -388,6 +388,7 @@ async function bootstrap(){state.config.siteName='Bilal Smart Library';state.con
 
 /* ========================= v0.6 Production Hardening ========================= */
 let realtimeChannelV06=null,realtimeDebounceV06=null,heartbeatTimerV06=null,scanBusyV06=false;
+let scannerLastCodeV065='',scannerLastAtV065=0;
 function numericBarcodeV06(prefix='20'){
   let value='';
   do{value=prefix+String(Date.now()).slice(-10)+String(Math.floor(Math.random()*100)).padStart(2,'0')}while(state.students.some(x=>x.barcode===value)||state.books.some(x=>x.barcode===value));
@@ -457,18 +458,30 @@ async function showLogin(){
 
 function attachGlobalScanner(input,callback){
   let buffer='',last=0;
+  const kioskCapture=()=>currentView==='kiosk'&&input?.id==='kioskScan'&&(currentUser?.role==='kiosk'||document.body.classList.contains('kiosk-mode'));
+  const refocus=()=>{const target=$('#kioskScan')||input;if(currentView==='kiosk'&&target&&!document.querySelector('#modalBackdrop:not(.hidden)')){try{target.focus({preventScroll:true})}catch{target.focus()}}};
   scannerHandler=async e=>{
-    if(scanBusyV06)return;
-    if(document.activeElement?.matches('textarea,select')&&document.activeElement!==input)return;
-    if(document.activeElement?.matches('input')&&document.activeElement!==input)return;
-    const now=Date.now();if(now-last>180)buffer='';last=now;
-    if(e.key==='Enter'){
-      const code=(input?.value||buffer).trim();if(!code)return;e.preventDefault();e.stopImmediatePropagation();if(input)input.value='';buffer='';
-      scanBusyV06=true;try{await callback(code)}finally{setTimeout(()=>{scanBusyV06=false;input?.focus()},180)}return;
+    const isKiosk=kioskCapture();
+    if(document.querySelector('#modalBackdrop:not(.hidden)'))return;
+    if(scanBusyV06){if(isKiosk&&(e.key==='Enter'||e.key==='Tab')){e.preventDefault();e.stopImmediatePropagation()}return}
+    if(!isKiosk){
+      if(document.activeElement?.matches('textarea,select')&&document.activeElement!==input)return;
+      if(document.activeElement?.matches('input')&&document.activeElement!==input)return;
+    }
+    if(e.ctrlKey||e.altKey||e.metaKey)return;
+    const now=Date.now();if(now-last>250)buffer='';last=now;
+    if(e.key==='Enter'||e.key==='Tab'){
+      const code=String(input?.value||buffer||'').trim();
+      if(!code){if(isKiosk)refocus();return}
+      e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();if(input)input.value='';buffer='';
+      if(code===scannerLastCodeV065&&now-scannerLastAtV065<700){refocus();return}
+      scannerLastCodeV065=code;scannerLastAtV065=now;scanBusyV06=true;
+      try{await callback(code)}finally{setTimeout(()=>{scanBusyV06=false;refocus()},120)}return;
     }
     if(e.key.length===1){buffer+=e.key;if(input&&document.activeElement!==input)input.value=buffer}
   };
-  document.addEventListener('keydown',scannerHandler,true);input?.focus();
+  document.addEventListener('keydown',scannerHandler,true);
+  setTimeout(refocus,0);
 }
 function detachGlobalScanner(){if(scannerHandler){document.removeEventListener('keydown',scannerHandler,true);scannerHandler=null}scanBusyV06=false}
 
@@ -478,9 +491,15 @@ async function handleScan(code){
     if(remoteMode){const r=await cloudTransaction('student_lookup',{studentCode:String(code).trim()});if(!r?.ok){scanMsg(r?.message||'لم يتم العثور على الطالب',false);return}const s={code:r.student.code,name:r.student.name,grade:r.student.grade||'',section:r.student.section||'',status:r.student.active?'نشط':'موقوف',activeLoans:r.student.activeLoans||0,overdue:r.student.overdue||0};if(s.status!=='نشط'){scanMsg('حساب الطالب موقوف',false);return}state.kiosk.student=s;state.kiosk.step='book';render('kiosk');return}
     const s=resolveStudent(code);if(!s){scanMsg('لم يتم العثور على الطالب',false);return}state.kiosk.student=s;state.kiosk.step='book';render('kiosk');return;
   }
-  const bookCode=String(code).trim();
-  if(remoteMode){const br=await cloudTransaction('book_lookup',{bookCode});if(!br?.ok){scanMsg(br?.message||'لم يتم العثور على الكتاب',false);return}const result=await borrowBook(state.kiosk.student.code,br.book.copyCode);if(result.ok){state.kiosk.lastBook={code:br.book.copyCode,title:br.book.title||'كتاب',category:br.book.category||'',shelf:br.book.shelf||''};state.kiosk.lastLoanDueISO=result.dueDateISO;playSuccessSoundV06();render('kiosk')}else scanMsg(result.message,false);return}
-  const b=resolveBook(bookCode);if(!b){scanMsg('لم يتم العثور على الكتاب',false);return}const result=await borrowBook(state.kiosk.student.code,b.code);if(result.ok){state.kiosk.lastBook=resolveBook(b.code);state.kiosk.lastLoanDueISO=result.dueDateISO;playSuccessSoundV06();render('kiosk')}else scanMsg(result.message,false)
+  const studentName=state.kiosk.student.name,studentCode=state.kiosk.student.code,bookCode=String(code).trim();
+  if(remoteMode){
+    const br=await cloudTransaction('book_lookup',{bookCode});if(!br?.ok){scanMsg(br?.message||'لم يتم العثور على الكتاب',false);return}
+    const result=await borrowBook(studentCode,br.book.copyCode);
+    if(result.ok){clearKioskTimer();playSuccessSoundV06();const bookTitle=br.book.title||'الكتاب';resetKiosk();toast(`✓ تمت استعارة «${bookTitle}» للطالب ${studentName}`)}else scanMsg(result.message,false);return;
+  }
+  const b=resolveBook(bookCode);if(!b){scanMsg('لم يتم العثور على الكتاب',false);return}
+  const result=await borrowBook(studentCode,b.code);
+  if(result.ok){clearKioskTimer();playSuccessSoundV06();const bookTitle=b.title||'الكتاب';resetKiosk();toast(`✓ تمت استعارة «${bookTitle}» للطالب ${studentName}`)}else scanMsg(result.message,false)
 }
 async function returnBook(identifier,show=true){
   if(remoteMode){const res=await cloudTransaction('return',{bookCode:String(identifier).trim(),stationCode:currentStation().id});if(res?.ok){playSuccessSoundV06();await loadCloudState(false,true);if(show){toast('تم تسجيل الإرجاع بنجاح');render(currentView)}return {ok:true}}if(show)toast(res?.message||'تعذر الإرجاع');return {ok:false}}

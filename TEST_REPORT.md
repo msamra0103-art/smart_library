@@ -100,3 +100,25 @@
 - تمت إضافة Vercel Serverless Function في `api/keepalive.js`.
 - تمت إضافة Vercel Cron يومي في `vercel.json`.
 - لا يوجد `service_role` داخل ملفات الواجهة أو مسار Keep-Alive.
+
+
+## v0.6.5 — External Kiosk Barcode + Session Lifecycle
+- PASS: JavaScript syntax (`node --check`).
+- PASS: Kiosk scanner path no longer rejects scans because another input element retained browser focus.
+- PASS: HID terminators supported: Enter and Tab.
+- PASS: duplicate-scan guard added for repeated CR/LF-style suffixes.
+- PASS: successful checkout calls `resetKiosk()` immediately; no post-checkout countdown.
+- PASS: Kiosk checkout skips a full cloud reload before returning to the ready screen.
+- NOTE: physical USB reader validation still requires the actual school reader/browser combination.
+
+### Automated scanner simulations
+- PASS: simulated external Kiosk with browser focus deliberately left on a different hidden input; numeric barcode was captured successfully.
+- PASS: second scan terminated by `Tab` was captured successfully.
+- PASS: immediate repeated duplicate barcode was suppressed.
+- PASS: simulated successful checkout reset the student session immediately and returned `state.kiosk.student` to null.
+
+
+## v0.6.6 — Keep-Alive Schedule
+- `vercel.json` valid JSON.
+- Cron schedule: `0 3,15 * * *`.
+- Expected Qatar times: ~06:00 and ~18:00 daily.
