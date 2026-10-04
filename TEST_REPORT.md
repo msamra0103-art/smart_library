@@ -85,8 +85,18 @@
 - PASS: مسار بدون PIN = تأكيد داخلي ثم Sign Out إلى شاشة الدخول.
 - PASS: مسار مع PIN = نموذج داخلي ثم `verify_exit_pin`.
 
-## v0.6.2 — Return-date rendering regression
+## v0.6.3 — Return-date rendering regression
 
 - Supabase verification: PASS — returned loans contain non-null `returned_at`.
 - Front-end template fix: PASS — returned date now executes `formatISODate(...)` instead of displaying the JavaScript expression literally.
 - JavaScript syntax check: PASS.
+
+- v0.6.3: تم اختبار منطق الحركة اليومية، والتصفية حسب التاريخ ونوع العملية والبحث، وإظهار الاستعارة والإرجاع كسجلين مستقلين عند حدوثهما في اليوم نفسه.
+
+## v0.6.4 — Supabase Keep-Alive
+- تم إنشاء `public.keepalive_health` مع RLS ومنع القراءة المباشرة من `anon` و`authenticated`.
+- تم إنشاء `public.keepalive_ping()` بصلاحية تنفيذ لـ `anon` و`authenticated` فقط.
+- تم اختبار الدالة تحت دور `anon` ونجحت، وارتفع `ping_count` من 0 إلى 1.
+- تمت إضافة Vercel Serverless Function في `api/keepalive.js`.
+- تمت إضافة Vercel Cron يومي في `vercel.json`.
+- لا يوجد `service_role` داخل ملفات الواجهة أو مسار Keep-Alive.

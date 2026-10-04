@@ -65,3 +65,16 @@ body.kiosk-mode .return-layout{min-height:100vh;padding:clamp(28px,4vw,70px);ali
 .field-error{min-height:22px;color:#b42318;font-size:13px;margin-top:-4px;margin-bottom:8px}
 .kiosk-mode .modal-backdrop{z-index:99999}
 .kiosk-mode .modal-card{max-width:520px}
+
+/* v0.6.3 — Daily circulation */
+.circulation-filter-card{margin-bottom:16px}
+.circulation-filter-grid{display:grid;grid-template-columns:1fr 1fr 1.6fr auto;gap:12px;align-items:end}
+.circulation-filter-grid .field{margin:0}
+.circulation-filter-grid input,.circulation-filter-grid select{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;outline:none}
+.date-shortcuts{display:flex;gap:7px;padding-bottom:1px}
+.operation-badge{display:inline-flex;align-items:center;gap:5px;border-radius:18px;padding:6px 10px;font-size:10px;font-weight:800;white-space:nowrap}
+.operation-badge.checkout{background:#edf3ff;color:#2c65cf}
+.operation-badge.return{background:#eaf9f2;color:#16845b}
+.circulation-table small{color:var(--muted)}
+@media(max-width:900px){.circulation-filter-grid{grid-template-columns:1fr 1fr}.date-shortcuts{grid-column:1/-1}.circulation-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.circulation-filter-grid,.circulation-kpis{grid-template-columns:1fr}}
