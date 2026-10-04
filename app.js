@@ -1,6 +1,6 @@
 const STORAGE_KEY='bilalSmartLibraryCloudV06';
 const LEGACY_KEYS=[];
-const VERSION='0.6.8';
+const VERSION='0.6.9';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const deepClone=x=>JSON.parse(JSON.stringify(x));
 const esc=v=>String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));
@@ -457,42 +457,46 @@ async function showLogin(){
 }
 
 function attachGlobalScanner(input,callback){
-  let buffer='',last=0,autoTimer=null;
-  const kioskCapture=()=>currentView==='kiosk'&&input?.id==='kioskScan'&&(currentUser?.role==='kiosk'||guestKioskModeV067||document.body.classList.contains('kiosk-mode'));
-  const refocus=()=>{const target=$('#kioskScan')||input;if(currentView==='kiosk'&&target?.isConnected&&!document.querySelector('#modalBackdrop:not(.hidden)')){try{target.focus({preventScroll:true})}catch{target.focus()}}};
-  const clearAuto=()=>{if(autoTimer){clearTimeout(autoTimer);autoTimer=null}};
+  let buffer='',last=0,quietTimer=null;
+  const isKioskContext=()=>currentView==='kiosk'&&(currentUser?.role==='kiosk'||guestKioskModeV067||document.body.classList.contains('kiosk-mode'));
+  const refocus=()=>{const target=$('#kioskScan')||input;if(target?.isConnected&&!document.querySelector('#modalBackdrop:not(.hidden)')){try{target.focus({preventScroll:true})}catch{target.focus()}}};
+  const clearQuiet=()=>{if(quietTimer){clearTimeout(quietTimer);quietTimer=null}};
   const submit=async()=>{
-    clearAuto();
-    const code=String(buffer||input?.value||'').trim();
+    clearQuiet();
+    const code=String(buffer||'').trim();
+    buffer='';if(input)input.value='';
     if(!code){refocus();return}
-    const now=Date.now();buffer='';if(input)input.value='';
+    const now=Date.now();
     if(scanBusyV06){refocus();return}
     if(code===scannerLastCodeV065&&now-scannerLastAtV065<700){refocus();return}
     scannerLastCodeV065=code;scannerLastAtV065=now;scanBusyV06=true;
-    try{await callback(code)}finally{setTimeout(()=>{scanBusyV06=false;refocus()},100)}
+    try{await callback(code)}finally{setTimeout(()=>{scanBusyV06=false;refocus()},120)}
   };
   scannerHandler=e=>{
-    const isKiosk=kioskCapture();
     if(document.querySelector('#modalBackdrop:not(.hidden)'))return;
     if(e.ctrlKey||e.altKey||e.metaKey)return;
-    if(!isKiosk){
+    const kiosk=isKioskContext();
+    if(!kiosk){
       if(document.activeElement?.matches('textarea,select')&&document.activeElement!==input)return;
       if(document.activeElement?.matches('input')&&document.activeElement!==input)return;
     }
     const now=Date.now();
-    if(now-last>250)buffer='';last=now;
+    // Do not split a real scanner burst merely because one character was a little slow.
+    if(last&&now-last>1200)buffer='';
+    last=now;
     if(e.key==='Enter'||e.key==='Tab'){
-      if(isKiosk){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}
+      if(kiosk){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}
       submit().catch(console.error);return;
     }
     if(e.key.length===1){
-      if(isKiosk){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}
+      if(kiosk){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}
       buffer+=e.key;
+      // Keep the scanned value invisible to the student.
       if(input)input.value='';
-      clearAuto();
-      // USB/HID scanners type the whole code as a fast burst. Submit automatically
-      // after a short quiet gap, so Enter is never required.
-      if(isKiosk&&buffer.length>=4)autoTimer=setTimeout(()=>submit().catch(console.error),90);
+      clearQuiet();
+      // Most barcode readers append Enter automatically. This fallback only fires
+      // after a generous quiet gap, so slow HID readers are not submitted halfway.
+      if(kiosk&&buffer.length>=4)quietTimer=setTimeout(()=>submit().catch(console.error),350);
     }
   };
   document.addEventListener('keydown',scannerHandler,true);

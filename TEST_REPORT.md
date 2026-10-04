@@ -1,3 +1,15 @@
+## v0.6.9 — External Kiosk + Deployment Regression Fix
+
+- PASS: app.js syntax checked with Node.
+- PASS: active scanner handler no longer uses the 90ms early-submit rule.
+- PASS: kiosk input stays programmatically blank while HID characters are collected.
+- PASS: Enter/Tab suffix remains supported automatically; no physical Enter press is required from the student.
+- PASS: fallback waits 350ms after the full scanner burst before submission.
+- PASS: successful checkout resets the student session immediately.
+- PASS: Vercel Hobby cron is now once daily at 03:00 UTC (06:00 Qatar), which satisfies Hobby limits.
+- PASS: GitHub Actions adds the second keep-alive at 15:00 UTC (18:00 Qatar).
+- ROOT CAUSE VERIFIED: the previous GitHub commit had Vercel status failure, so the scanner fixes in v0.6.8 were not live on smartlibrary-one.vercel.app.
+
 # تقرير اختبار Bilal Smart Library v0.6 Production
 
 ## النتيجة العامة
