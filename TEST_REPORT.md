@@ -165,3 +165,9 @@
 - Vercel Cron removed to remain compatible with Hobby plan.
 - Workflow uses retries and validates an `ok:true` response.
 
+
+## v0.7.2 checks
+- Initial kiosk scan distinguishes student card vs on-loan book.
+- On-loan book path calls return immediately with no student session required.
+- Current KIOSK-01 configured as Hybrid in Supabase.
+- JavaScript syntax and ZIP integrity checked.
