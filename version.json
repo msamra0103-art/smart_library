@@ -1,4 +1,4 @@
 {
-  "version": "0.7.2",
-  "release": "scan-book-direct-self-return"
+  "version": "0.7.3",
+  "release": "github-actions-workflow-upload-visibility-fix"
 }

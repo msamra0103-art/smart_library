@@ -1,3 +1,13 @@
+# v0.7.3 — GitHub Workflow Upload Visibility Fix
+
+- تثبيت ملف التشغيل الفعلي في `.github/workflows/keepalive.yml`.
+- إضافة نسخة مرئية في جذر الحزمة باسم `KEEPALIVE_GITHUB_ACTIONS.yml` لمنع ضياع ملف المجلد المخفي أثناء الرفع.
+- إضافة `prepare_github_workflow.bat` لإنشاء/إعادة إنشاء مسار `.github/workflows` تلقائيًا على Windows.
+- إضافة تعليمات رفع عربية واضحة في `GITHUB_UPLOAD_INSTRUCTIONS_AR.txt`.
+- الجدولة الحالية: 06:00 و18:00 تقريبًا بتوقيت قطر عبر GitHub Actions فقط.
+- الإبقاء على `vercel.json` فارغًا من Cron لتفادي قيود Vercel Hobby.
+- لا تغيير على منطق الاستعارة/الإرجاع في v0.7.2؛ هذا الإصدار خاص بموثوقية رفع وتشغيل GitHub Actions.
+
 # v0.7.1 — GitHub Keep-Alive correction
 
 - Added `.github/workflows/keepalive.yml`.

@@ -1,6 +1,6 @@
 const STORAGE_KEY='bilalSmartLibraryCloudV06';
 const LEGACY_KEYS=[];
-const VERSION='0.7.2';
+const VERSION='0.7.3';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const deepClone=x=>JSON.parse(JSON.stringify(x));
 const esc=v=>String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));

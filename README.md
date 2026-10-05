@@ -1,16 +1,16 @@
+# Bilal Smart Library v0.7.3
 
-## Keep-Alive v0.7.1
+## الإعداد الحالي المعتمد للـ Keep-Alive
 
-- GitHub Actions now runs the keep-alive twice daily: 06:00 and 18:00 Qatar time (03:00 and 15:00 UTC).
-- The workflow calls `https://smartlibrary-one.vercel.app/api/keepalive`, which performs the real Supabase RPC ping.
-- Vercel Cron has been removed from `vercel.json` to avoid the Hobby-plan scheduling limitation and duplicate pings.
-- The workflow also supports manual testing from GitHub Actions via `workflow_dispatch`.
+> هذه الفقرة هي المرجع النهائي الحالي وتلغي أي ملاحظات تاريخية أقدم عن Vercel Cron داخل هذا الملف.
 
-## v0.6.9 — إصلاح المحطة الخارجية والنشر
-
-- قارئ الباركود في وضع Kiosk الخارجي يستخدم نفس تسلسل التشغيل: بطاقة الطالب → ظهور الاسم → مسح الكتاب → تسجيل الاستعارة → إغلاق جلسة الطالب فورًا.
-- لا يحتاج الطالب إلى الضغط على Enter؛ إذا كان القارئ يرسل Enter تلقائيًا يستخدمه النظام، ويوجد fallback آمن للقارئات التي لا ترسله.
-- Keep-Alive يعمل صباحًا عبر Vercel Cron ومساءً عبر GitHub Actions لتوافق Vercel Hobby.
+- GitHub Actions هو المسؤول الوحيد عن الجدولة في الإصدار 0.7.3.
+- التشغيل مرتان يوميًا: 03:00 و15:00 UTC، أي تقريبًا 06:00 صباحًا و18:00 مساءً بتوقيت قطر.
+- الملف التنفيذي يجب أن يوجد في `.github/workflows/keepalive.yml`.
+- تمت إضافة نسخة مرئية في جذر الحزمة باسم `KEEPALIVE_GITHUB_ACTIONS.yml` حتى لا يضيع ملف الـWorkflow عند الرفع.
+- شغّل `prepare_github_workflow.bat` بعد فك الضغط لضمان إنشاء المسار الصحيح قبل الرفع.
+- `vercel.json` لا يحتوي Cron؛ الطلب المجدول من GitHub يستدعي `/api/keepalive` المنشور على Vercel، وهذا المسار ينفذ Ping حقيقيًا إلى Supabase.
+- يدعم الـWorkflow التشغيل اليدوي من تبويب Actions لاختبار الاتصال فورًا.
 
 # Bilal Smart Library v0.6 Production
 

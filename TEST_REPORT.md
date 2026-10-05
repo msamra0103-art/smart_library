@@ -1,3 +1,14 @@
+## v0.7.3 — GitHub Keep-Alive Packaging Validation
+
+- PASS: `.github/workflows/keepalive.yml` موجود داخل الحزمة النهائية.
+- PASS: نسخة مطابقة مرئية `KEEPALIVE_GITHUB_ACTIONS.yml` موجودة في جذر الحزمة.
+- PASS: `prepare_github_workflow.bat` يعيد إنشاء مسار GitHub Workflow على Windows.
+- PASS: الجدولة تحتوي `0 3 * * *` و`0 15 * * *`.
+- PASS: `workflow_dispatch` موجود للاختبار اليدوي.
+- PASS: `vercel.json` لا يحتوي أي Cron.
+- PASS: لا يوجد `service_role` داخل Workflow.
+- PASS: منطق المسح والاستعارة والإرجاع محفوظ من v0.7.2 بدون تغيير.
+
 ## v0.6.9 — External Kiosk + Deployment Regression Fix
 
 - PASS: app.js syntax checked with Node.
