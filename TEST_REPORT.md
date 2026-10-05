@@ -152,3 +152,16 @@
 - إدخال القارئ السريع يُجمع في buffer ويُرسل تلقائيًا بعد 90ms من توقف الإدخال.
 - حقل المسح أصبح readonly لمنع وميض رقم الطالب على الشاشة.
 - ما زال Enter/Tab مدعومًا كخيار توافق، لكنه غير مطلوب.
+
+
+## v0.7.1 Unified circulation test
+تم اختبار دالة circulate_book_v3 داخل Transaction ثم Rollback: أول مسح للكتاب أنشأ checkout، والمسح التالي لنفس الطالب/النسخة أنشأ return، وأصبحت حالة النسخة available وحالة الاستعارة returned مع returned_at غير فارغ.
+
+## v0.7.1 Keep-Alive package validation
+
+- `.github/workflows/keepalive.yml` present.
+- Schedule: `0 3 * * *` and `0 15 * * *` (06:00 / 18:00 Qatar).
+- Manual `workflow_dispatch` present.
+- Vercel Cron removed to remain compatible with Hobby plan.
+- Workflow uses retries and validates an `ok:true` response.
+

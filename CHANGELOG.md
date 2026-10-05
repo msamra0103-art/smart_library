@@ -1,3 +1,11 @@
+# v0.7.1 — GitHub Keep-Alive correction
+
+- Added `.github/workflows/keepalive.yml`.
+- Runs at 06:00 and 18:00 Qatar time every day.
+- Calls the deployed `/api/keepalive` endpoint with retries and fails the Action if the endpoint does not return `ok:true`.
+- Removed Vercel Cron configuration so Vercel Hobby deployment is no longer blocked by the twice-daily cron rule.
+- Added manual `workflow_dispatch` testing.
+
 # v0.6.9
 
 - إصلاح نشر Vercel على خطة Hobby باستبدال Cron غير المدعوم مرتين يوميًا بـ Cron صباحي واحد متوافق مع Hobby.
@@ -99,3 +107,11 @@
 - حالات النسخ: متاح، مستعار، محجوز، مفقود، تالف، صيانة.
 - سجل تدقيق غير قابل للمسح من الواجهة.
 - Backup سحابي أوضح ولا يتضمن كلمات مرور Auth.
+
+
+## v0.7.1 — Unified Self Circulation
+- محطة الاستعارة أصبحت تتعرف تلقائيًا على نوع العملية بعد مسح بطاقة الطالب ثم الكتاب.
+- إذا كانت النسخة مستعارة باسم الطالب نفسه: يسجل النظام الإرجاع تلقائيًا ويثبت returned_at ويعيد حالة النسخة إلى متاح/محجوز حسب قائمة الانتظار.
+- إذا كانت النسخة غير مستعارة: يسجل النظام استعارة جديدة.
+- إذا كانت النسخة مستعارة لطالب آخر: يمنع العملية برسالة واضحة.
+- لا يوجد زر منفصل للاستعارة/الإرجاع، وتنتهي جلسة الطالب فور نجاح العملية.

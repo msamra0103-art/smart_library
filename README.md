@@ -1,3 +1,11 @@
+
+## Keep-Alive v0.7.1
+
+- GitHub Actions now runs the keep-alive twice daily: 06:00 and 18:00 Qatar time (03:00 and 15:00 UTC).
+- The workflow calls `https://smartlibrary-one.vercel.app/api/keepalive`, which performs the real Supabase RPC ping.
+- Vercel Cron has been removed from `vercel.json` to avoid the Hobby-plan scheduling limitation and duplicate pings.
+- The workflow also supports manual testing from GitHub Actions via `workflow_dispatch`.
+
 ## v0.6.9 — إصلاح المحطة الخارجية والنشر
 
 - قارئ الباركود في وضع Kiosk الخارجي يستخدم نفس تسلسل التشغيل: بطاقة الطالب → ظهور الاسم → مسح الكتاب → تسجيل الاستعارة → إغلاق جلسة الطالب فورًا.
@@ -129,3 +137,7 @@
 7. بعد ذلك يفتح الجهاز محطة الاستعارة مباشرة في المرات التالية بدون حساب المدير.
 
 التفعيل يستخدم Token عشوائيًا خاصًا بالمحطة، ويمكن إلغاؤه من المدير. صلاحيات الجهاز الخارجي لا تشمل الإدارة أو المستخدمين أو الإعدادات أو التقارير.
+
+
+### التداول الذاتي الموحد (v0.7.1)
+المسار: بطاقة الطالب ← باركود الكتاب. النظام يحدد تلقائيًا هل العملية استعارة أم إرجاع. الكتاب المستعار لنفس الطالب يُرجع تلقائيًا مع تسجيل تاريخ الإرجاع، والكتاب المتاح يُستعار تلقائيًا. لا يوجد زر منفصل للإرجاع.
