@@ -1,0 +1,11 @@
+Bilal Smart Library v0.8.0 — Backend Status
+
+تم تطبيق تعديلات Supabase بالفعل على مشروع المكتبة:
+- book_copies.archived
+- staff_checkout_book_v1
+- حماية checkout_book_v2 و circulate_book_v3 من تداول النسخ المؤرشفة
+- library-transaction: يدعم staff_checkout
+- library-public-kiosk: يمنع النسخ المؤرشفة
+- DESK-01: مكتب مسؤول مركز مصادر التعلم
+
+لا يحتاج المستخدم إلى تشغيل ملفات SQL يدويًا على المشروع الحالي. ملفات migration مرفقة فقط للتوثيق وإدارة الإصدارات.

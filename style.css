@@ -81,3 +81,21 @@ body.kiosk-mode .return-layout{min-height:100vh;padding:clamp(28px,4vw,70px);ali
 
 /* v0.6.8 external kiosk activation */
 .activation-code-box{display:grid;gap:8px;text-align:center;padding:18px;border:1px solid rgba(19,126,141,.18);border-radius:18px;background:linear-gradient(135deg,rgba(13,94,112,.06),rgba(34,151,154,.08));margin-bottom:14px}.activation-code-box span,.activation-code-box small{color:#667b84}.activation-code-box b{font-size:15px}.activation-code-box code{display:block;font:900 34px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:8px;direction:ltr;color:#0b6f7a;background:#fff;border-radius:14px;padding:13px 18px;border:1px dashed rgba(11,111,122,.3);user-select:all}.station-meta .status{margin-inline-start:6px}
+
+
+/* ======================= v0.8.0 archive + staff desk ======================= */
+.archive-kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
+.archive-tools{flex-wrap:wrap}
+.archive-row{opacity:.72;background:rgba(148,163,184,.07)}
+.staff-desk-grid{display:grid;grid-template-columns:minmax(280px,.75fr) minmax(520px,1.6fr);gap:18px;margin-bottom:18px}
+.staff-scan-card .big-scan{font-size:20px;min-height:58px;text-align:center;font-weight:800;letter-spacing:.6px}
+.staff-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.inline-field{display:flex;gap:8px;align-items:center}.inline-field input{flex:1}
+.readonly-box{min-height:44px;border:1px solid var(--border,#dbe4ea);border-radius:10px;padding:11px 12px;background:rgba(148,163,184,.08);font-weight:700}
+.staff-picked-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.staff-selection-card{border:1px solid rgba(59,130,246,.18);background:rgba(59,130,246,.055);border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:94px}
+.staff-selection-card h3{margin:4px 0}.staff-selection-card p{margin:0;color:var(--muted,#64748b);font-size:13px}.staff-selection-card small{color:var(--muted,#64748b)}
+.staff-pick-empty{border:1px dashed var(--border,#dbe4ea);border-radius:14px;padding:24px;text-align:center;color:var(--muted,#64748b);background:rgba(148,163,184,.04)}
+@media(max-width:1050px){.archive-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.staff-desk-grid{grid-template-columns:1fr}.staff-form-grid,.staff-picked-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.archive-kpis{grid-template-columns:1fr}.inline-field{align-items:stretch;flex-direction:column}}
+/* ======================= end v0.8.0 ======================= */

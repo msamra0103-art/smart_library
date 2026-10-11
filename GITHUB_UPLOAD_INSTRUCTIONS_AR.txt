@@ -1,4 +1,4 @@
-Bilal Smart Library v0.7.3 — تعليمات رفع GitHub
+Bilal Smart Library v0.8.0 — تعليمات رفع GitHub
 
 سبب هذه النسخة:
 ملف GitHub Actions كان موجودًا داخل الحزمة السابقة، لكن المجلد .github لم يصل إلى المستودع، لذلك لم تعمل أي جدولة صباحًا أو مساءً.
