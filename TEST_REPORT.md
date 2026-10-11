@@ -1,4 +1,31 @@
-## v0.7.3 — GitHub Keep-Alive Packaging Validation
+## v0.8.1 Staff Checkout Regression Fix
+
+- PASS: JavaScript syntax check.
+- PASS: Save button no longer depends on pre-selected internal state.
+- PASS: Manual student/book fields are resolved on save.
+- PASS: Success state persists on the page after checkout.
+- PASS: New loan is injected immediately if cloud reload is delayed.
+- PASS: app.js cache-busting enabled in index.html.
+
+# v0.8.0 Test Report
+
+## Passed
+
+- `node --check app.js` — PASS.
+- Supabase migration `book_archive_and_staff_checkout_v080` — PASS.
+- Staff checkout database smoke test with 21-day custom duration — PASS.
+- Archived-copy checkout guard smoke test — PASS.
+- Temporary test records cleaned after smoke tests — PASS.
+- `library-transaction` deployed with `staff_checkout` and archived-copy protection — ACTIVE.
+- `library-public-kiosk` deployed with archived-copy protection — ACTIVE.
+- Existing RLS policies allow admin/librarian update of `books` and `book_copies`.
+- Security advisor rechecked after DDL.
+
+## Notes
+
+The archive uses soft deletion to preserve historical circulation records. Archived copies are excluded from operational checkout and staff selection.
+
+## v0.8.0 — GitHub Keep-Alive Packaging Validation
 
 - PASS: `.github/workflows/keepalive.yml` موجود داخل الحزمة النهائية.
 - PASS: نسخة مطابقة مرئية `KEEPALIVE_GITHUB_ACTIONS.yml` موجودة في جذر الحزمة.

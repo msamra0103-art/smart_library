@@ -1,3 +1,26 @@
+# v0.8.1 — إصلاح حفظ الاستعارة العادية
+
+- إصلاح حالة الإدخال اليدوي: أصبح زر **حفظ وتسجيل الاستعارة** يتعرّف على الطالب والكتاب مباشرة من الحقول، دون اشتراط الضغط أولًا على زر «تعرف».
+- زر الحفظ أصبح دائمًا قابلًا للاستخدام ويعرض **جارٍ الحفظ…** أثناء التنفيذ لمنع الضغط المكرر.
+- بعد نجاح العملية تظهر رسالة خضراء واضحة: **تم الحفظ وتسجيل الاستعارة بنجاح** مع اسم الطالب والكتاب وموعد الإرجاع.
+- تظهر الاستعارة الجديدة فورًا داخل **استعارات الطالب الحالية** في نفس الشاشة.
+- إضافة تحديث فوري محلي كاحتياط إذا تأخر إعادة تحميل البيانات السحابية، ثم تتزامن البيانات مع Supabase.
+- إضافة cache-busting للـ app.js و style.css لضمان وصول الإصلاح بعد نشر GitHub/Vercel دون بقاء نسخة JavaScript قديمة في المتصفح.
+
+# v0.8.0 — Book Archive + Staff Circulation
+
+- New sidebar page: **أرشيف الكتب**.
+- Full catalog control: add, import, edit, safe-delete/archive, restore, filter, export, labels.
+- Added `book_copies.archived` with safe circulation guards.
+- New sidebar page: **الاستعارة العادية** for admin/librarian staff.
+- Barcode workflow: scan student then book.
+- Manual workflow: search by student name/code/barcode and book title/code/barcode.
+- Custom loan duration 1–365 days.
+- New backend RPC `staff_checkout_book_v1`.
+- `library-transaction` upgraded to support `staff_checkout`.
+- Public/internal kiosk book lookup blocks archived copies.
+- Existing Keep-Alive workflow retained.
+
 # v0.7.3 — GitHub Workflow Upload Visibility Fix
 
 - تثبيت ملف التشغيل الفعلي في `.github/workflows/keepalive.yml`.
